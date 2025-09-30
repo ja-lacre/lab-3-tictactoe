@@ -35,25 +35,39 @@ body {
   box-shadow: 0 1px 2px rgba(0,0,0,0.25);
 }
 
-.game {
+.main-container {
+  min-height: calc(100vh - var(--navbar-height));
   display: flex;
-  gap: 24px;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
   padding: 20px;
 }
 
-.game-board {
+.card {
+  width: 100%;
+  max-width: 720px;
   background: var(--panel);
-  padding: 18px;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(2,6,23,0.06);
+  box-shadow: 0 8px 30px rgba(2,6,23,0.06);
+  padding: 20px;
 }
 
+.game {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.game-board {
+  flex: 1 1 520px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #fff;
+}
 
 .board-row {
   display: flex;
 }
-
 
 .square {
   width: 64px;
@@ -70,10 +84,8 @@ body {
   justify-content: center;
 }
 
-
 .square-x { color: var(--accent-x); }
 .square-o { color: var(--accent-o); }
-
 
 .status {
   margin-bottom: 12px;
@@ -81,11 +93,13 @@ body {
   font-size: 16px;
 }
 
-
-.game-info {
-  min-width: 220px;
+.game-info{
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px;
 }
-
 
 .btn {
   padding: 8px 12px;
@@ -99,3 +113,10 @@ body {
 
 .move-list { padding-left: 18px; }
 .move-item { margin-bottom: 8px; }
+
+@media (max-width: 760px) {
+  .card { max-width: 640px; padding: 16px; }
+  .game { flex-direction: column; }
+  .game-info { width: 100%; }
+  .game-board { width: 100%; }
+}

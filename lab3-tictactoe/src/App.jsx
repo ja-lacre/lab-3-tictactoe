@@ -37,16 +37,21 @@ export default function App() {
   return (
     <div>
       <Navbar />
-      <div className="game">
-        <div className="game-board">
-          <Status winner={winner} xIsNext={xIsNext} />
-          <Board squares={currentSquares} onSquareClick={handleSquareClick} />
-          <div className="controls">
-            <button className="btn" onClick={resetGame}>Reset</button>
+      <div className="main-container">
+        {/* Card that contains both the board and the move list */}
+        <div className="card">
+          <div className="game">
+            <div className="game-board">
+              <Status winner={winner} xIsNext={xIsNext} />
+              <Board squares={currentSquares} onSquareClick={handleSquareClick} />
+              <div className="controls">
+                <button className="btn" onClick={resetGame}>Reset</button>
+              </div>
+            </div>
+            <div className="game-info">
+              <MoveList history={history} jumpTo={jumpTo} />
+            </div>
           </div>
-        </div>
-        <div className="game-info">
-          <MoveList history={history} jumpTo={jumpTo} />
         </div>
       </div>
     </div>
