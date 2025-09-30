@@ -1,35 +1,50 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import Board from './components/Board';
+import Status from './components/Status';
+import MoveList from './components/MoveList';
+import { calculateWinner } from './lib/game';
 
-function App() {
-  const [count, setCount] = useState(0)
+
+export default function App() {
+  const [history, setHistory] = useState([Array(9).fill(null)]);
+  const [currentMove, setCurrentMove] = useState(0);
+
+  const currentSquares = history[currentMove];
+  const xIsNext = currentMove % 2 === 0;
+  const winner = calculateWinner(currentSquares);
+
+  function handleSquareClick(index) {
+    if (winner || currentSquares[index]) return;
+
+    const nextSquares = currentSquares.slice();
+    nextSquares[index] = xIsNext ? 'X' : 'O';
+
+    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
+    setHistory(nextHistory);
+    setCurrentMove(nextHistory.length - 1);
+  }
+
+  function jumpTo(move) {
+    setCurrentMove(move);
+  }
+
+  function resetGame() {
+    setHistory([Array(9).fill(null)]);
+    setCurrentMove(0);
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="game">
+      <div className="game-board">
+        <Status winner={winner} xIsNext={xIsNext} />
+        <Board squares={currentSquares} onSquareClick={handleSquareClick} />
+        <div className="controls">
+          <button className="btn" onClick={resetGame}>Reset</button>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div className="game-info">
+        <MoveList history={history} jumpTo={jumpTo} />
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
-
-export default App
