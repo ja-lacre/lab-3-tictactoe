@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Board from './components/Board';
 import Status from './components/Status';
 import MoveList from './components/MoveList';
+import Navbar from './components/Navbar';
 import { calculateWinner } from './lib/game';
 
 
@@ -34,16 +35,19 @@ export default function App() {
   }
 
   return (
-    <div className="game">
-      <div className="game-board">
-        <Status winner={winner} xIsNext={xIsNext} />
-        <Board squares={currentSquares} onSquareClick={handleSquareClick} />
-        <div className="controls">
-          <button className="btn" onClick={resetGame}>Reset</button>
+    <div>
+      <Navbar />
+      <div className="game">
+        <div className="game-board">
+          <Status winner={winner} xIsNext={xIsNext} />
+          <Board squares={currentSquares} onSquareClick={handleSquareClick} />
+          <div className="controls">
+            <button className="btn" onClick={resetGame}>Reset</button>
+          </div>
         </div>
-      </div>
-      <div className="game-info">
-        <MoveList history={history} jumpTo={jumpTo} />
+        <div className="game-info">
+          <MoveList history={history} jumpTo={jumpTo} />
+        </div>
       </div>
     </div>
   );
